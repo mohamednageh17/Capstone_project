@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "263754654312",
+    "project_id": "tv-series-app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263754654312:android:b7abdc48e6af522d",
+        "android_client_info": {
+          "package_name": "com.example.berlin.tvseriesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263754654312-olt11t5l02gbok24b95nugt3500usbee.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "263754654312-580hmccs2nbo04dje3qpm3frn04gcuil.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.berlin.tvseriesapp",
+            "certificate_hash": "33142639df9d073dc84acb1254bf0997f08cf2a9"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfeAunt73B9pf7YNz6MCXoFLr7tV3iLx8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
