@@ -12,4 +12,23 @@
     <string name="search_hint">Search</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="NoResult">No Results Found</string>
+    <string name="SerchResult">search_result</string>
+    <string name="Overview">Overview</string>
+    <string name="Trailers">Trailers:</string>
+    <string name="Recommendations">Recommendations</string>
+    <string name="SimilarTVSeries">Similar TV Series</string>
+    <string name="NoInternetConnection">No Internet Connection!!</string>
+    <string name="SaveAsFavourite">Save in Favourite List</string>
+    <string name="RemoveFromFavourite">Remove From Favourite List</string>
+    <string name="PopularTVseries">Popular TV series:</string>
+    <string name="TopRatedTVseries">Top Rated TV series:</string>
+    <string name="FavouriteTVseries">"Favourite TV series:"</string>
+    <string name="AiringTodayTVseries">Airing Today TV series:</string>
+    <string name="OnTheAirTVseries">On The Air TV series:</string>
+    <string name="SetAsFavourite">Set As Favourite</string>
+    <string name="PosterImg">Poster Image</string>
+    <string name="PlayOnYoutube">Play</string>
+    <string name="Share">Share</string>
+
 </resources>

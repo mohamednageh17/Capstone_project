@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.berlin.tvseriesapp.R;
-import com.example.berlin.tvseriesapp.UI.Fragments.main_Fragment;
+import com.example.berlin.tvseriesapp.UI.Fragments.MainFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
@@ -18,9 +18,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 //import mnageh.moviesapp.Utils.MySharedPref;
 
-public class MainActivity extends AppCompatActivity implements  GoogleApiClient.OnConnectionFailedListener  {
-    main_Fragment mainFragment;
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+    MainFragment mainFragment;
     public static Activity ctx;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +38,12 @@ public class MainActivity extends AppCompatActivity implements  GoogleApiClient.
         mAdView.loadAd(adRequest);
 
 
-
         ctx = this;
-        mainFragment=  new main_Fragment();
-        if(savedInstanceState==null){
+        mainFragment = new MainFragment();
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.MainFragment, mainFragment).commit();
-        }
-        else{
-            mainFragment=(main_Fragment) getSupportFragmentManager().findFragmentById(R.id.MainFragment);
+        } else {
+            mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.MainFragment);
         }
 
     }

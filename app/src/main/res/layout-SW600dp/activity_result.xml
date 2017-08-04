@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     tools:context=".UI.Activities.MainActivity"
     android:orientation="horizontal"
-    android:weightSum="1"
-    >
+    android:weightSum="1">
 
     <FrameLayout
         android:layout_width="0dp"
         android:layout_weight="0.4"
         android:layout_height="wrap_content">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -19,20 +19,19 @@
                 android:id="@+id/txtS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="search_result"
+                android:text="@string/SerchResult"
                 android:layout_marginBottom="10dp"
                 android:textSize="30dp"
                 android:textStyle="bold|italic"
                 android:padding="3dp"
                 android:textAlignment="center"
                 android:layout_gravity="center_horizontal"
-                android:layout_alignParentTop="true"
-                />
+                android:layout_alignParentTop="true" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="No Results Found ^_^ "
+                android:text="@string/NoResult"
                 android:textSize="30dp"
                 android:textStyle="bold|italic"
                 android:layout_gravity="center_horizontal"
@@ -41,13 +40,13 @@
                 android:visibility="gone"
                 android:id="@+id/txtS1"
                 android:textAlignment="center"
-                android:layout_below="@+id/txtS"/>
+                android:layout_below="@+id/txtS" />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/RecyclerView"
-                android:layout_below="@+id/txtS"/>
+                android:layout_below="@+id/txtS" />
 
         </RelativeLayout>
     </FrameLayout>
@@ -58,8 +57,7 @@
         android:layout_weight="0.6"
         android:id="@+id/DetailedFragment1"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-    </RelativeLayout>
+        android:orientation="horizontal"></RelativeLayout>
 
 </LinearLayout>
 

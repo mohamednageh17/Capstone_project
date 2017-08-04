@@ -13,10 +13,10 @@ import java.util.ArrayList;
  * Created by Berlin on 8/4/2017.
  */
 
-public class Series_Model implements Parcelable {
-    public boolean Favourite=false;
+public class SeriesModel implements Parcelable {
+    public boolean Favourite = false;
     private String Title;
-    private String Overview ;
+    private String Overview;
     private String Poster_ImageUrl;
     private String Release_Date;
     private String id;
@@ -26,11 +26,11 @@ public class Series_Model implements Parcelable {
    /* private String Review_Author;
     private String Review_Content;*/
 
-    public Series_Model() {
+    public SeriesModel() {
 
     }
 
-    public Series_Model(String id, String title, String poster, String overview, String userRating,
+    public SeriesModel(String id, String title, String poster, String overview, String userRating,
                        String releaseDate) {
         this.id = id;
         this.Title = title;
@@ -40,16 +40,15 @@ public class Series_Model implements Parcelable {
         Release_Date = releaseDate;
     }
 
-    public static ArrayList<Series_Model> ParsingTrailerData(String JsonData)
-    {
+    public static ArrayList<SeriesModel> ParsingTrailerData(String JsonData) {
         int counter = 0;
-        ArrayList<Series_Model> movieModelList = new ArrayList<Series_Model>();
+        ArrayList<SeriesModel> movieModelList = new ArrayList<SeriesModel>();
         try {
             JSONObject jj = new JSONObject(JsonData);
             JSONArray ja = jj.getJSONArray("results");
             while (counter < ja.length()) {
                 JSONObject j = ja.getJSONObject(counter);
-                Series_Model movieModel = new Series_Model();
+                SeriesModel movieModel = new SeriesModel();
                 movieModel.setTitle(j.getString("name"));
                 movieModel.setOverview(j.getString("overview"));
                 movieModel.setRelease_Date(j.getString("first_air_date"));
@@ -61,8 +60,7 @@ public class Series_Model implements Parcelable {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             return movieModelList;
         }
     }
@@ -136,12 +134,12 @@ public class Series_Model implements Parcelable {
         Review_Content= reviewModel.getContent();
     }*/
 
-    public void setTrailer(trailer_Model trailerModel) {
+    public void setTrailer(TrailerModel trailerModel) {
         Trailer_Key = trailerModel.getKey();
-        Trailer_Name= trailerModel.getName();
+        Trailer_Name = trailerModel.getName();
     }
 
-    protected Series_Model(Parcel in) {
+    protected SeriesModel(Parcel in) {
         Favourite = in.readByte() != 0x00;
         Title = in.readString();
         Overview = in.readString();
@@ -176,14 +174,15 @@ public class Series_Model implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Creator<Series_Model> CREATOR = new Creator<Series_Model>() {
+    public static final Creator<SeriesModel> CREATOR = new Creator<SeriesModel>() {
         @Override
-        public Series_Model createFromParcel(Parcel in) {
-            return new Series_Model(in);
+        public SeriesModel createFromParcel(Parcel in) {
+            return new SeriesModel(in);
         }
+
         @Override
-        public Series_Model[] newArray(int size) {
-            return new Series_Model[size];
+        public SeriesModel[] newArray(int size) {
+            return new SeriesModel[size];
         }
     };
 }

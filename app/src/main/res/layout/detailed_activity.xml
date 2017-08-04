@@ -10,12 +10,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:id="@+id/DetailedFragment"
-        android:layout_height="match_parent">
-    </LinearLayout>
-
-
-
-
+        android:layout_height="match_parent"></LinearLayout>
 
 
 </LinearLayout>

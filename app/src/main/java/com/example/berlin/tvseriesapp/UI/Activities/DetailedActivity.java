@@ -7,17 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.berlin.tvseriesapp.R;
-import com.example.berlin.tvseriesapp.UI.Fragments.detailed_Fragment;
+import com.example.berlin.tvseriesapp.UI.Fragments.DetailedFragment;
 
 
-public class detailed_Activity extends AppCompatActivity {
+public class DetailedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailed_activity);
-        detailed_Fragment myDetailed_fragment=new detailed_Fragment();
-        Bundle MoviesInfo= getIntent().getBundleExtra("SeriesInfo");
+        DetailedFragment myDetailed_fragment = new DetailedFragment();
+        Bundle MoviesInfo = getIntent().getBundleExtra("SeriesInfo");
         myDetailed_fragment.setArguments(MoviesInfo);
-        getSupportFragmentManager().beginTransaction().add(R.id.DetailedFragment,myDetailed_fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.DetailedFragment, myDetailed_fragment).commit();
         ActionBar actionBar = this.getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);

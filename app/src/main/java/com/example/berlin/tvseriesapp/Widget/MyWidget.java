@@ -20,16 +20,16 @@ public class MyWidget extends AppWidgetProvider {
                                 int appWidgetId) {
 
 
-        CharSequence widgetText ="Favourite TV Series";
+        CharSequence widgetText = "Favourite TV Series";
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.my_widget);
         views.setTextViewText(R.id.appwidget_text, widgetText);
 
         Intent MyIntent1 = new Intent(context, ListWidgetService.class);
         views.setRemoteAdapter(R.id.SeriesListViewWidget, MyIntent1);
 
-        Intent intent=new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0);
-        views.setOnClickPendingIntent(R.id.appwidget_text,pendingIntent);
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -41,6 +41,7 @@ public class MyWidget extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
+
     @Override
     public void onEnabled(Context context) {
         // Enter relevant functionality for when the first widget is created

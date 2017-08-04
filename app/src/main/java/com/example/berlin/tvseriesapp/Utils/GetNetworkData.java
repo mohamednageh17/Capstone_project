@@ -2,6 +2,7 @@ package com.example.berlin.tvseriesapp.Utils;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GetNetworkData extends AsyncTask<Void,Void,String> {
+public class GetNetworkData extends AsyncTask<Void, Void, String> {
     private String Url_Key;
     private String id;
     public static String Basic_Url = "http://api.themoviedb.org/3/tv";
@@ -31,7 +32,7 @@ public class GetNetworkData extends AsyncTask<Void,Void,String> {
 
     public GetNetworkData(String Key, String id) {
         Url_Key = Key;
-        this.id=id;
+        this.id = id;
     }
 
     NetworkOperations networkOperations;
@@ -87,31 +88,31 @@ public class GetNetworkData extends AsyncTask<Void,Void,String> {
     @Override
     protected String doInBackground(Void... voids) {
         String JsonData = "";
-        if(Url_Key.equals("Popular Movies"))
-              JsonData = get_Data(Basic_Url+PopSeries_Url);
-        else if(Url_Key.equals("Top Rated Movies"))
-              JsonData = get_Data( Basic_Url+TopSeries_Url);
-        else if(Url_Key.equals("latest_Url"))
-            JsonData = get_Data( Basic_Url+latest_Url);
-        else if(Url_Key.equals("airing_today"))
-            JsonData = get_Data( Basic_Url+airing_today);
-        else if(Url_Key.equals("on_the_air"))
-            JsonData = get_Data( Basic_Url+on_the_air);
-        else if(Url_Key.equals("search"))
-            JsonData = get_Data( searchURL+id);
-        else if(Url_Key.equals("review_Model"))
-            JsonData = get_Data( Basic_Url + "/" + id + ReviewsSeries_Url);
-        else if(Url_Key.equals("trailer_Model"))
-            JsonData = get_Data(  Basic_Url + "/" + id + TrailersSeries_Url);
-        else if(Url_Key.equals("s"))
-            JsonData = get_Data( Basic_Url + "/" + id + recommendations_Url);
-        else if(Url_Key.equals("r"))
-            JsonData = get_Data(  Basic_Url + "/" + id + similar_Url);
+        if (Url_Key.equals("Popular Movies"))
+            JsonData = get_Data(Basic_Url + PopSeries_Url);
+        else if (Url_Key.equals("Top Rated Movies"))
+            JsonData = get_Data(Basic_Url + TopSeries_Url);
+        else if (Url_Key.equals("latest_Url"))
+            JsonData = get_Data(Basic_Url + latest_Url);
+        else if (Url_Key.equals("airing_today"))
+            JsonData = get_Data(Basic_Url + airing_today);
+        else if (Url_Key.equals("on_the_air"))
+            JsonData = get_Data(Basic_Url + on_the_air);
+        else if (Url_Key.equals("search"))
+            JsonData = get_Data(searchURL + id);
+        else if (Url_Key.equals("review_Model"))
+            JsonData = get_Data(Basic_Url + "/" + id + ReviewsSeries_Url);
+        else if (Url_Key.equals("TrailerModel"))
+            JsonData = get_Data(Basic_Url + "/" + id + TrailersSeries_Url);
+        else if (Url_Key.equals("s"))
+            JsonData = get_Data(Basic_Url + "/" + id + recommendations_Url);
+        else if (Url_Key.equals("r"))
+            JsonData = get_Data(Basic_Url + "/" + id + similar_Url);
         return JsonData;
     }
 
     @Override
     protected void onPostExecute(String JsonData) {
-            networkOperations.OnDataReached(JsonData);
+        networkOperations.OnDataReached(JsonData);
     }
 }

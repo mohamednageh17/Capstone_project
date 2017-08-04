@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     tools:context=".UI.Activities.MainActivity"
     android:orientation="horizontal"
-    android:weightSum="1"
-    >
+    android:weightSum="1">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -25,13 +25,12 @@
                 android:padding="3dp"
                 android:textAlignment="center"
                 android:layout_gravity="center_horizontal"
-                android:layout_alignParentTop="true"
-                />
+                android:layout_alignParentTop="true" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="No Results Found ^_^ "
+                android:text="@string/NoResult"
                 android:textSize="30dp"
                 android:textStyle="bold|italic"
                 android:layout_gravity="center_horizontal"
@@ -40,13 +39,13 @@
                 android:visibility="gone"
                 android:id="@+id/txtS1"
                 android:textAlignment="center"
-                android:layout_below="@+id/txtS"/>
+                android:layout_below="@+id/txtS" />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/RecyclerView"
-                android:layout_below="@+id/txtS"/>
+                android:layout_below="@+id/txtS" />
 
         </RelativeLayout>
     </FrameLayout>

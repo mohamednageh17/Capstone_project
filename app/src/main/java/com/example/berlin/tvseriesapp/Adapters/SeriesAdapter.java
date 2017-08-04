@@ -11,39 +11,43 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.example.berlin.tvseriesapp.Models.Series_Model;
+import com.example.berlin.tvseriesapp.Models.SeriesModel;
 import com.example.berlin.tvseriesapp.R;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 
-public class Series_Adapter extends RecyclerView.Adapter<Series_Adapter.MyViewHolder>  {
-    ArrayList<Series_Model> series_models;
+public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHolder> {
+    ArrayList<SeriesModel> series_models;
     Context context;
-    int  LastPosition=-1;
-    RecyclerViewClickListener recyclerViewClickListener ;
-    public Series_Adapter(){}
-    public Series_Adapter(ArrayList<Series_Model>series_models, Context context){
-        this.series_models=new ArrayList<>();
-        this.series_models=series_models;
-        this.context=context;
+    int LastPosition = -1;
+    RecyclerViewClickListener recyclerViewClickListener;
+
+    public SeriesAdapter() {
     }
 
-    public void setClickListener(RecyclerViewClickListener clickListener){
-       this.recyclerViewClickListener= clickListener;
+    public SeriesAdapter(ArrayList<SeriesModel> series_models, Context context) {
+        this.series_models = new ArrayList<>();
+        this.series_models = series_models;
+        this.context = context;
+    }
+
+    public void setClickListener(RecyclerViewClickListener clickListener) {
+        this.recyclerViewClickListener = clickListener;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.poster_movie,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.poster_movie, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Picasso.with(context).load(holder.imgString+series_models.get(position).getPoster_ImageUrl())
+        Picasso.with(context).load(holder.imgString + series_models.get(position).getPoster_ImageUrl())
                 .placeholder(R.drawable.loadingicon).error(R.drawable.error).into(holder.PosterImg);
-        setAnimation(holder.PosterContainer,position);
+        setAnimation(holder.PosterContainer, position);
     }
 
     @Override
@@ -52,20 +56,21 @@ public class Series_Adapter extends RecyclerView.Adapter<Series_Adapter.MyViewHo
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final public  String imgString= "http://image.tmdb.org/t/p/w185/";
+        final public String imgString = "http://image.tmdb.org/t/p/w185/";
         ImageView PosterImg;
         RelativeLayout PosterContainer;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            PosterImg=(ImageView)itemView.findViewById(R.id.Poster_Image2);
-            PosterContainer=(RelativeLayout)itemView.findViewById(R.id.PosterContainer);
+            PosterImg = (ImageView) itemView.findViewById(R.id.Poster_Image2);
+            PosterContainer = (RelativeLayout) itemView.findViewById(R.id.PosterContainer);
         }
 
         @Override
         public void onClick(View view) {
-            if(recyclerViewClickListener!=null)
-                recyclerViewClickListener.ItemClicked(view ,getAdapterPosition());
+            if (recyclerViewClickListener != null)
+                recyclerViewClickListener.ItemClicked(view, getAdapterPosition());
         }
 
         public void clearAnimation() {
@@ -85,16 +90,16 @@ public class Series_Adapter extends RecyclerView.Adapter<Series_Adapter.MyViewHo
         }
     }
 
-    private ArrayList<Series_Model> models;
+    private ArrayList<SeriesModel> models;
 
     @Override
     public void onViewDetachedFromWindow(MyViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-             holder.clearAnimation();
+        holder.clearAnimation();
     }
 
 
-    public ArrayList<Series_Model> getMovies() {
+    public ArrayList<SeriesModel> getMovies() {
         return models;
     }
 }

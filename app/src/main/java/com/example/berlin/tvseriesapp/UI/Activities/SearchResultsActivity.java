@@ -14,22 +14,23 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.berlin.tvseriesapp.Adapters.Series_Adapter;
-import com.example.berlin.tvseriesapp.Models.Series_Model;
+import com.example.berlin.tvseriesapp.Adapters.SeriesAdapter;
+import com.example.berlin.tvseriesapp.Models.SeriesModel;
 import com.example.berlin.tvseriesapp.R;
-import com.example.berlin.tvseriesapp.UI.Fragments.detailed_Fragment;
-import com.example.berlin.tvseriesapp.UI.Fragments.main_Fragment;
+import com.example.berlin.tvseriesapp.UI.Fragments.DetailedFragment;
+import com.example.berlin.tvseriesapp.UI.Fragments.MainFragment;
 import com.example.berlin.tvseriesapp.Utils.GetNetworkData;
 import com.example.berlin.tvseriesapp.Utils.NetworkOperations;
+
 import java.util.ArrayList;
 
 public class SearchResultsActivity extends AppCompatActivity {
-    private ArrayList<Series_Model> series;
-    private Series_Adapter seriesAdapter;
+    private ArrayList<SeriesModel> series;
+    private SeriesAdapter seriesAdapter;
     RecyclerView seriesRecyclerView;
-    main_Fragment m_frag_processes;
+    MainFragment m_frag_processes;
     Context context;
-    boolean IsTablet=false;
+    boolean IsTablet = false;
     Bundle seriesInfo;
     boolean InstanceState;
     static boolean checkFrag = false;
@@ -40,12 +41,12 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        seriesRecyclerView=(RecyclerView)findViewById(R.id.RecyclerView);
-        seriesRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        textView=(TextView)findViewById(R.id.txtS);
-        textView1=(TextView)findViewById(R.id.txtS1);
+        seriesRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
+        seriesRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        textView = (TextView) findViewById(R.id.txtS);
+        textView1 = (TextView) findViewById(R.id.txtS1);
         textView1.setVisibility(View.GONE);
-        seriesInfo=new Bundle();
+        seriesInfo = new Bundle();
         handleIntent(getIntent());
     }
 
@@ -59,7 +60,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
-
         return true;
     }
 
@@ -72,51 +72,49 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            textView.setText("Search Result: "+query);
+            textView.setText("Search Result: " + query);
             //use the query to search
-            collectData("search",query);
+            collectData("search", query);
         }
     }
 
-    public void collectData(String Key,String q){
-        if(MainActivity.NetworkState()) {
+    public void collectData(String Key, String q) {
+        if (MainActivity.NetworkState()) {
             GetNetworkData fetchData = new GetNetworkData(Key, q);
             fetchData.execute();
-            fetchData.setNetworkOperations(new NetworkOperations()  {
+            fetchData.setNetworkOperations(new NetworkOperations() {
 
                 @Override
                 public void OnDataReached(String JsonData) {
-                    series = Series_Model.ParsingTrailerData(JsonData);
-                    if(series.size()==0)
+                    series = SeriesModel.ParsingTrailerData(JsonData);
+                    if (series.size() == 0)
                         textView1.setVisibility(View.VISIBLE);
-                    seriesAdapter = new Series_Adapter(series, SearchResultsActivity.this);
+                    seriesAdapter = new SeriesAdapter(series, SearchResultsActivity.this);
                     seriesRecyclerView.setAdapter(seriesAdapter);
-                    if(JsonData==null)
-                        Toast.makeText(MainActivity.ctx," No Internet Connection", Toast.LENGTH_SHORT).show();
+                    if (JsonData == null)
+                        Toast.makeText(MainActivity.ctx, R.string.NoInternetConnection, Toast.LENGTH_SHORT).show();
                     CheckTablet();
                     ClickEvent();
                 }
             });
-        }
-        else{
+        } else {
             series = new ArrayList<>();
-            seriesAdapter = new Series_Adapter(series, context);
+            seriesAdapter = new SeriesAdapter(series, context);
             seriesRecyclerView.setAdapter(seriesAdapter);
-            Toast.makeText(this," No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,R.string.NoInternetConnection, Toast.LENGTH_SHORT).show();
             CheckTablet();
             ClickEvent();
         }
     }
 
     private void CheckTablet() {
-
-        Series_Model series_model =  new Series_Model();
-        if (IsTablet ) {
+        SeriesModel series_model = new SeriesModel();
+        if (IsTablet) {
             if (series.size() != 0)
                 series_model = series.get(0);
             seriesInfo.putParcelable("seriesModel", series_model);
-            if (!InstanceState && !checkFrag ) {
-                detailed_Fragment detailedFragment1 = new detailed_Fragment();
+            if (!InstanceState && !checkFrag) {
+                DetailedFragment detailedFragment1 = new DetailedFragment();
                 detailedFragment1.setArguments(seriesInfo);
                 getSupportFragmentManager().beginTransaction().replace(R.id.DetailedFragment, detailedFragment1).commit();
                 checkFrag = true;
@@ -125,21 +123,21 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     private void ClickEvent() {
-        seriesAdapter.setClickListener(new Series_Adapter.RecyclerViewClickListener() {
+        seriesAdapter.setClickListener(new SeriesAdapter.RecyclerViewClickListener() {
             @Override
             public void ItemClicked(View v, int position) {
-                Series_Model series_model=new Series_Model();
-                series_model=series.get(position);
-                seriesInfo.putParcelable("seriesModel",series_model);
-                IsTablet=getResources().getBoolean(R.bool.isTablet);
+                SeriesModel series_model = new SeriesModel();
+                series_model = series.get(position);
+                seriesInfo.putParcelable("seriesModel", series_model);
+                IsTablet = getResources().getBoolean(R.bool.isTablet);
                 if (!IsTablet) {
-                    Intent in = new Intent( SearchResultsActivity.this , detailed_Activity.class);
+                    Intent in = new Intent(SearchResultsActivity.this, DetailedActivity.class);
                     in.putExtra("SeriesInfo", seriesInfo);
                     startActivity(in);
                 } else {
-                    detailed_Fragment  detailedFragment1=new detailed_Fragment();
+                    DetailedFragment detailedFragment1 = new DetailedFragment();
                     detailedFragment1.setArguments(seriesInfo);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.DetailedFragment1,detailedFragment1).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.DetailedFragment1, detailedFragment1).commit();
                 }
             }
         });

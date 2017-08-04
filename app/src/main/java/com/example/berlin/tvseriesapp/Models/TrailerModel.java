@@ -2,16 +2,18 @@ package com.example.berlin.tvseriesapp.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class trailer_Model implements Parcelable {
-    private String  id;
+public class TrailerModel implements Parcelable {
+    private String id;
     private String key;
     private String name;
 
-    public trailer_Model(){}
+    public TrailerModel() {
+    }
 
     public String getID() {
         return id;
@@ -37,26 +39,24 @@ public class trailer_Model implements Parcelable {
         name = name;
     }
 
-    public static trailer_Model ParsingTrailerData(String JsonData)
-    {
-        trailer_Model trailerModel =new trailer_Model();
+    public static TrailerModel ParsingTrailerData(String JsonData) {
+        TrailerModel trailerModel = new TrailerModel();
         try {
-            JSONObject jj=new JSONObject(JsonData);
-            JSONArray ja=jj.getJSONArray("results");
-            JSONObject j=ja.getJSONObject(0);
+            JSONObject jj = new JSONObject(JsonData);
+            JSONArray ja = jj.getJSONArray("results");
+            JSONObject j = ja.getJSONObject(0);
             trailerModel.setID(j.getString("id"));
             trailerModel.setKey(j.getString("key"));
             trailerModel.setName(j.getString("name"));
 
         } catch (JSONException e) {
-            e.  printStackTrace();
-        }
-        finally{
+            e.printStackTrace();
+        } finally {
             return trailerModel;
         }
-     }
+    }
 
-    protected trailer_Model(Parcel in) {
+    protected TrailerModel(Parcel in) {
         id = in.readString();
         key = in.readString();
         name = in.readString();
@@ -75,15 +75,15 @@ public class trailer_Model implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Creator<trailer_Model> CREATOR = new Creator<trailer_Model>() {
+    public static final Creator<TrailerModel> CREATOR = new Creator<TrailerModel>() {
         @Override
-        public trailer_Model createFromParcel(Parcel in) {
-            return new trailer_Model(in);
+        public TrailerModel createFromParcel(Parcel in) {
+            return new TrailerModel(in);
         }
 
         @Override
-        public trailer_Model[] newArray(int size) {
-            return new trailer_Model[size];
+        public TrailerModel[] newArray(int size) {
+            return new TrailerModel[size];
         }
     };
 }

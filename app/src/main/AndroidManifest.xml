@@ -44,7 +44,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".UI.Activities.detailed_Activity"
+            android:name=".UI.Activities.DetailedActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop">
             <meta-data

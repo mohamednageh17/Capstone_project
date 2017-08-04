@@ -5,31 +5,32 @@
 
     <item
         android:id="@+id/pop"
-        android:title="Popular Movies"/>
+        android:title="Popular Movies" />
 
     <item
         android:id="@+id/top"
-        android:title="Top related Movies"/>
+        android:title="Top related Movies" />
 
     <item
         android:id="@+id/airing_today"
-        android:title="Airing Today"/>
+        android:title="Airing Today" />
     <item
         android:id="@+id/on_the_air"
-        android:title="On The Air"/>
+        android:title="On The Air" />
 
-    <item android:id="@+id/action_search"
+    <item
+        android:id="@+id/action_search"
         android:icon="@drawable/ic_action_search"
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
     <item
         android:id="@+id/fav"
-        android:title="Favourite Movies"/>
+        android:title="Favourite Movies" />
     <item
         android:id="@+id/sign_out"
-        android:title="@string/sign_out"/>
+        android:title="@string/sign_out" />
 
 
 </menu>
