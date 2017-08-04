@@ -131,6 +131,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 Series_Model series_model=new Series_Model();
                 series_model=series.get(position);
                 seriesInfo.putParcelable("seriesModel",series_model);
+                IsTablet=getResources().getBoolean(R.bool.isTablet);
                 if (!IsTablet) {
                     Intent in = new Intent( SearchResultsActivity.this , detailed_Activity.class);
                     in.putExtra("SeriesInfo", seriesInfo);
@@ -138,7 +139,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 } else {
                     detailed_Fragment  detailedFragment1=new detailed_Fragment();
                     detailedFragment1.setArguments(seriesInfo);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.DetailedFragment,detailedFragment1).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.DetailedFragment1,detailedFragment1).commit();
                 }
             }
         });
