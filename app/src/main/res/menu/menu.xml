@@ -5,18 +5,18 @@
 
     <item
         android:id="@+id/pop"
-        android:title="Popular Movies" />
+        android:title="@string/PopularTVseries" />
 
     <item
         android:id="@+id/top"
-        android:title="Top related Movies" />
+        android:title="@string/TopRatedTVseries" />
 
     <item
         android:id="@+id/airing_today"
-        android:title="Airing Today" />
+        android:title="@string/AiringTodayTVseries" />
     <item
         android:id="@+id/on_the_air"
-        android:title="On The Air" />
+        android:title="@string/OnTheAirTVseries" />
 
     <item
         android:id="@+id/action_search"
@@ -27,7 +27,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/fav"
-        android:title="Favourite Movies" />
+        android:title="@string/FavouriteTVseries" />
     <item
         android:id="@+id/sign_out"
         android:title="@string/sign_out" />

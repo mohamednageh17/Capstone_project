@@ -21,14 +21,13 @@
     <string name="NoInternetConnection">No Internet Connection!!</string>
     <string name="SaveAsFavourite">Save in Favourite List</string>
     <string name="RemoveFromFavourite">Remove From Favourite List</string>
-    <string name="PopularTVseries">Popular TV series:</string>
-    <string name="TopRatedTVseries">Top Rated TV series:</string>
-    <string name="FavouriteTVseries">"Favourite TV series:"</string>
-    <string name="AiringTodayTVseries">Airing Today TV series:</string>
-    <string name="OnTheAirTVseries">On The Air TV series:</string>
+    <string name="PopularTVseries">Popular TV series</string>
+    <string name="TopRatedTVseries">Top Rated TV series</string>
+    <string name="FavouriteTVseries">"Favourite TV series"</string>
+    <string name="AiringTodayTVseries">Airing Today TV series</string>
+    <string name="OnTheAirTVseries">On The Air TV series</string>
     <string name="SetAsFavourite">Set As Favourite</string>
     <string name="PosterImg">Poster Image</string>
     <string name="PlayOnYoutube">Play</string>
     <string name="Share">Share</string>
-
 </resources>
