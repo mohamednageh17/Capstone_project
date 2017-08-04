@@ -18,14 +18,14 @@ import java.util.ArrayList;
 
 
 public class Series_Adapter extends RecyclerView.Adapter<Series_Adapter.MyViewHolder>  {
-    ArrayList<Series_Model> movies_models;
+    ArrayList<Series_Model> series_models;
     Context context;
     int  LastPosition=-1;
     RecyclerViewClickListener recyclerViewClickListener ;
     public Series_Adapter(){}
-    public Series_Adapter(ArrayList<Series_Model>movies, Context context){
-        this.movies_models=new ArrayList<>();
-        this.movies_models=movies;
+    public Series_Adapter(ArrayList<Series_Model>series_models, Context context){
+        this.series_models=new ArrayList<>();
+        this.series_models=series_models;
         this.context=context;
     }
 
@@ -41,14 +41,14 @@ public class Series_Adapter extends RecyclerView.Adapter<Series_Adapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Picasso.with(context).load(holder.imgString+movies_models.get(position).getPoster_ImageUrl())
+        Picasso.with(context).load(holder.imgString+series_models.get(position).getPoster_ImageUrl())
                 .placeholder(R.drawable.loadingicon).error(R.drawable.error).into(holder.PosterImg);
         setAnimation(holder.PosterContainer,position);
     }
 
     @Override
     public int getItemCount() {
-        return movies_models.size();
+        return series_models.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -85,7 +85,7 @@ public class Series_Adapter extends RecyclerView.Adapter<Series_Adapter.MyViewHo
         }
     }
 
-    private ArrayList<Series_Model> mMovies;
+    private ArrayList<Series_Model> models;
 
     @Override
     public void onViewDetachedFromWindow(MyViewHolder holder) {
@@ -95,6 +95,6 @@ public class Series_Adapter extends RecyclerView.Adapter<Series_Adapter.MyViewHo
 
 
     public ArrayList<Series_Model> getMovies() {
-        return mMovies;
+        return models;
     }
 }

@@ -28,13 +28,13 @@ import android.support.annotation.Nullable;
 public class SeriesProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    static final int MOVIES = 300;
+    static final int SERIES = 300;
     private SeriesDBHelper mOpenHelper;
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = SeriesContract.CONTENT_AUTHORITY;
-        matcher.addURI(authority, SeriesContract.PATH_SERIES, MOVIES);
+        matcher.addURI(authority, SeriesContract.PATH_SERIES, SERIES);
         return matcher;
     }
 
@@ -50,7 +50,7 @@ public class SeriesProvider extends ContentProvider {
                         String sortOrder) {
         Cursor cursor;
         switch (sUriMatcher.match(uri)) {
-            case MOVIES: {
+            case SERIES: {
                 cursor = mOpenHelper.getReadableDatabase().query(
                         SeriesContract.SeriesEntry.TABLE_NAME,
                         projection,
@@ -76,7 +76,7 @@ public class SeriesProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
-            case MOVIES:
+            case SERIES:
                 return SeriesContract.SeriesEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -90,7 +90,7 @@ public class SeriesProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
         switch (match) {
-            case MOVIES: {
+            case SERIES: {
                 long id = db.insert(SeriesContract.SeriesEntry.TABLE_NAME, null, values);
                 if (id > 0) {
                     returnUri = SeriesContract.SeriesEntry.buildMovieUri(id);
@@ -118,7 +118,7 @@ public class SeriesProvider extends ContentProvider {
             selection = "1";
         }
         switch (match) {
-            case MOVIES:
+            case SERIES:
                 rowsDeleted = db.delete(
                         SeriesContract.SeriesEntry.TABLE_NAME, selection, selectionArgs);
                 break;
@@ -139,7 +139,7 @@ public class SeriesProvider extends ContentProvider {
         int rowsUpdated;
 
         switch (match) {
-            case MOVIES:
+            case SERIES:
                 rowsUpdated = db.update(SeriesContract.SeriesEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;

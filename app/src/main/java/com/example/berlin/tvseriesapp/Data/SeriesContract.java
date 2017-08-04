@@ -25,7 +25,7 @@ public class SeriesContract {
 
     public static final String CONTENT_AUTHORITY = "mnageh.tvseries";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-    public static final String PATH_SERIES = "movie";
+    public static final String PATH_SERIES = "series";
 
     public static final class SeriesEntry implements BaseColumns {
 
@@ -48,7 +48,7 @@ public class SeriesContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static final String[] MOVIE_COLUMNS = {
+        public static final String[] Series_COLUMNS = {
                 COLUMN_SERIES_ID,
                 COLUMN_SERIES_TITLE,
                 COLUMN_SERIES_POSTER_PATH,

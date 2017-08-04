@@ -82,10 +82,10 @@ public class SearchResultsActivity extends AppCompatActivity {
         if(MainActivity.NetworkState()) {
             GetNetworkData fetchData = new GetNetworkData(Key, q);
             fetchData.execute();
-            fetchData.setNetworkResponse(new NetworkOperations()  {
+            fetchData.setNetworkOperations(new NetworkOperations()  {
 
                 @Override
-                public void OnSuccess(String JsonData) {
+                public void OnDataReached(String JsonData) {
                     series = Series_Model.ParsingTrailerData(JsonData);
                     if(series.size()==0)
                         textView1.setVisibility(View.VISIBLE);
@@ -114,7 +114,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         if (IsTablet ) {
             if (series.size() != 0)
                 series_model = series.get(0);
-            seriesInfo.putParcelable("movie_Model", series_model);
+            seriesInfo.putParcelable("seriesModel", series_model);
             if (!InstanceState && !checkFrag ) {
                 detailed_Fragment detailedFragment1 = new detailed_Fragment();
                 detailedFragment1.setArguments(seriesInfo);
@@ -130,10 +130,10 @@ public class SearchResultsActivity extends AppCompatActivity {
             public void ItemClicked(View v, int position) {
                 Series_Model series_model=new Series_Model();
                 series_model=series.get(position);
-                seriesInfo.putParcelable("movie_Model",series_model);
+                seriesInfo.putParcelable("seriesModel",series_model);
                 if (!IsTablet) {
                     Intent in = new Intent( SearchResultsActivity.this , detailed_Activity.class);
-                    in.putExtra("MoviesInfo", seriesInfo);
+                    in.putExtra("SeriesInfo", seriesInfo);
                     startActivity(in);
                 } else {
                     detailed_Fragment  detailedFragment1=new detailed_Fragment();

@@ -23,8 +23,8 @@ public class Series_Model implements Parcelable {
     private String Vote_Average;
     private String Trailer_Name;
     private String Trailer_Key;
-    private String Review_Author;
-    private String Review_Content;
+   /* private String Review_Author;
+    private String Review_Content;*/
 
     public Series_Model() {
 
@@ -123,18 +123,18 @@ public class Series_Model implements Parcelable {
         return Trailer_Key;
     }
 
-    public String getReviewAuthor() {
+    /*public String getReviewAuthor() {
         return Review_Author;
     }
 
     public String getReviewContent() {
         return Review_Content;
-    }
+    }*/
 
-    public void setReview(review_Model reviewModel) {
+  /*  public void setReview(review_Model reviewModel) {
         Review_Author = reviewModel.getAuthor();
         Review_Content= reviewModel.getContent();
-    }
+    }*/
 
     public void setTrailer(trailer_Model trailerModel) {
         Trailer_Key = trailerModel.getKey();
@@ -151,8 +151,8 @@ public class Series_Model implements Parcelable {
         Vote_Average = in.readString();
         Trailer_Key = in.readString();
         Trailer_Name = in.readString();
-        Review_Author = in.readString();
-        Review_Content = in.readString();
+       /* Review_Author = in.readString();
+        Review_Content = in.readString();*/
     }
 
     @Override
@@ -171,8 +171,8 @@ public class Series_Model implements Parcelable {
         dest.writeString(Vote_Average);
         dest.writeString(Trailer_Key);
         dest.writeString(Trailer_Name);
-        dest.writeString(Review_Author);
-        dest.writeString(Review_Content);
+     /*   dest.writeString(Review_Author);
+        dest.writeString(Review_Content);*/
     }
 
     @SuppressWarnings("unused")

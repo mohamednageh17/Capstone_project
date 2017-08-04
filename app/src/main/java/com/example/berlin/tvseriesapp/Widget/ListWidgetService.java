@@ -21,7 +21,7 @@ public class ListWidgetService extends RemoteViewsService {
 }
     class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
-        ArrayList<Series_Model> movie_models=new ArrayList<>();
+        ArrayList<Series_Model> series_modelArrayList=new ArrayList<>();
 
         Context context;
 
@@ -37,7 +37,7 @@ public class ListWidgetService extends RemoteViewsService {
         @Override
         public void onDataSetChanged() {
 
-           movie_models=getFavouriteMovies();
+            series_modelArrayList=getFavouriteMovies();
 
         }
 
@@ -46,7 +46,7 @@ public class ListWidgetService extends RemoteViewsService {
             Series_Model movie_model;
             Cursor cursor;
             cursor=context.getContentResolver().query(SeriesContract.SeriesEntry.CONTENT_URI,
-                    SeriesContract.SeriesEntry.MOVIE_COLUMNS,
+                    SeriesContract.SeriesEntry.Series_COLUMNS,
                     null,
                     null,
                     null);
@@ -72,7 +72,7 @@ public class ListWidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            return movie_models.size();
+            return series_modelArrayList.size();
         }
 
         @Override
@@ -81,11 +81,11 @@ public class ListWidgetService extends RemoteViewsService {
 
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.series_row_item_widget);
 
-            if(movie_models==null)
+            if(series_modelArrayList==null)
                 return views;
 
-            views.setTextViewText(R.id.ingredient_name_widget,movie_models.get(position).getTitle());
-            views.setTextViewText(R.id.ingredient_measure_widget,movie_models.get(position).getRelease_Date());
+            views.setTextViewText(R.id.ingredient_name_widget,series_modelArrayList.get(position).getTitle());
+            views.setTextViewText(R.id.ingredient_measure_widget,series_modelArrayList.get(position).getRelease_Date());
 
             return views;
         }

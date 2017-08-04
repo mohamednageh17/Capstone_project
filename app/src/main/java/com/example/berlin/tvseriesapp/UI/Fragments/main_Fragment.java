@@ -31,6 +31,8 @@ import com.example.berlin.tvseriesapp.UI.Activities.SearchResultsActivity;
 import com.example.berlin.tvseriesapp.UI.Activities.detailed_Activity;
 import com.example.berlin.tvseriesapp.Utils.GetNetworkData;
 import com.example.berlin.tvseriesapp.Utils.NetworkOperations;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -51,7 +53,7 @@ public class main_Fragment extends android.support.v4.app.Fragment implements
     ArrayList<Series_Model> series;
     static boolean checkFrag = false;
     Series_Adapter seriesAdapter;
-    Bundle MoviesInfo;
+    Bundle SeriesInfo;
     Context context;
     boolean IsTablet;
     RecyclerView seriesRecyclerView;
@@ -85,7 +87,6 @@ public class main_Fragment extends android.support.v4.app.Fragment implements
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-
         view = inflater.inflate(R.layout.main_fragment, container, false);
 
 
@@ -104,7 +105,7 @@ public class main_Fragment extends android.support.v4.app.Fragment implements
         CurrentActivity = getActivity();
         seriesAdapter = new Series_Adapter();
         IsTablet = getResources().getBoolean(R.bool.isTablet);
-        MoviesInfo = new Bundle();
+        SeriesInfo = new Bundle();
         type = (TextView) view.findViewById(R.id.type);
 
         if(savedInstanceState!=null) {
@@ -124,7 +125,7 @@ public class main_Fragment extends android.support.v4.app.Fragment implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("Movies",series);
+        outState.putParcelableArrayList("series",series);
         outState.putInt(MENU_SELECTED, selected);
     }
 
@@ -138,14 +139,14 @@ public class main_Fragment extends android.support.v4.app.Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(), SeriesContract.SeriesEntry.CONTENT_URI, SeriesContract.SeriesEntry.MOVIE_COLUMNS,
+        return new CursorLoader(getActivity(), SeriesContract.SeriesEntry.CONTENT_URI, SeriesContract.SeriesEntry.Series_COLUMNS,
                 null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         ArrayList<Series_Model>FavouriteList=new ArrayList<>();
-        Series_Model movie_model;
+        Series_Model series_model;
      if(flag==1) {
          if (data != null && data.moveToFirst()) {
              do {
@@ -155,11 +156,12 @@ public class main_Fragment extends android.support.v4.app.Fragment implements
                  String overview = data.getString(SeriesContract.SeriesEntry.COL_SERIES_OVERVIEW);
                  String rating = data.getString(SeriesContract.SeriesEntry.COL_SERIES_VOTE_AVERAGE);
                  String releaseDate = data.getString(SeriesContract.SeriesEntry.COL_SERIES_RELEASE_DATE);
-                 movie_model = new Series_Model(id, title, posterPath, overview, rating, releaseDate);
-                 FavouriteList.add(movie_model);
+                 series_model = new Series_Model(id, title, posterPath, overview, rating, releaseDate);
+                 FavouriteList.add(series_model);
              } while (data.moveToNext());
          }
          data.close();
+         series=FavouriteList;
          seriesAdapter = new Series_Adapter(FavouriteList, context);
          seriesRecyclerView.setAdapter(seriesAdapter);
          m_frag_processes.CheckTablet();
@@ -180,13 +182,13 @@ public class main_Fragment extends android.support.v4.app.Fragment implements
 
     public void collectData(String Key){
         if(MainActivity.NetworkState()) {
-            GetNetworkData fetchData = new GetNetworkData(Key, "");
+            GetNetworkData getNetworkData = new GetNetworkData(Key, "");
             ClickEvent();
-            fetchData.execute();
-            fetchData.setNetworkResponse(new NetworkOperations()  {
+            getNetworkData.execute();
+            getNetworkData.setNetworkOperations(new NetworkOperations()  {
 
                 @Override
-                public void OnSuccess(String JsonData) {
+                public void OnDataReached(String JsonData) {
                     series = Series_Model.ParsingTrailerData(JsonData);
                     seriesAdapter = new Series_Adapter(series, context);
                     seriesRecyclerView.setAdapter(seriesAdapter);
@@ -208,14 +210,14 @@ public class main_Fragment extends android.support.v4.app.Fragment implements
     }
 
     public void CheckTablet(){
-        Series_Model movie =  new Series_Model();
+        Series_Model seriesModel =  new Series_Model();
         if (IsTablet ) {
             if (series.size() != 0)
-                movie = series.get(0);
-            MoviesInfo.putParcelable("movie_Model", movie);
+                seriesModel = series.get(0);
+            SeriesInfo.putParcelable("seriesModel", seriesModel);
             if (!InstanceState && !checkFrag ) {
                 detailed_Fragment detailedFragment1 = new detailed_Fragment();
-                detailedFragment1.setArguments(MoviesInfo);
+                detailedFragment1.setArguments(SeriesInfo);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.DetailedFragment, detailedFragment1).commit();
                 checkFrag = true;
             }
@@ -226,16 +228,16 @@ public class main_Fragment extends android.support.v4.app.Fragment implements
         seriesAdapter.setClickListener(new Series_Adapter.RecyclerViewClickListener() {
             @Override
             public void ItemClicked(View v, int position) {
-                Series_Model movie=new Series_Model();
-                movie=series.get(position);
-                MoviesInfo.putParcelable("movie_Model",movie);
+                Series_Model seriesModel=new Series_Model();
+                seriesModel=series.get(position);
+                SeriesInfo.putParcelable("seriesModel",seriesModel);
                 if (!IsTablet) {
                     Intent in = new Intent( CurrentActivity , detailed_Activity.class);
-                    in.putExtra("MoviesInfo", MoviesInfo);
+                    in.putExtra("SeriesInfo", SeriesInfo);
                     startActivity(in);
                 } else {
                     detailed_Fragment  detailedFragment1=new detailed_Fragment();
-                    detailedFragment1.setArguments(MoviesInfo);
+                    detailedFragment1.setArguments(SeriesInfo);
                     getFragmentManager().beginTransaction().replace(R.id.DetailedFragment,detailedFragment1).commit();
 
                 }

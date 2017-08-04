@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.berlin.tvseriesapp.Adapters.Series_Adapter;
 import com.example.berlin.tvseriesapp.Data.SeriesContract;
 import com.example.berlin.tvseriesapp.Models.Series_Model;
-import com.example.berlin.tvseriesapp.Models.review_Model;
+/*import com.example.berlin.tvseriesapp.Models.review_Model;*/
 import com.example.berlin.tvseriesapp.Models.trailer_Model;
 import com.example.berlin.tvseriesapp.R;
 import com.example.berlin.tvseriesapp.UI.Activities.MainActivity;
@@ -38,30 +38,30 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
     TextView Overview;
     TextView Release_Date;
     TextView Vote_Rating;
-    TextView Review_Author;
-    TextView Review_Content;
+   /* TextView Review_Author;
+    TextView Review_Content;*/
     TextView Trailer_Name;
     ImageView Favourite;
     ImageView button;
     detailedFragment_processes d_Frag_processes;
     Bundle series_Info ;
-    Series_Model series ;
+    Series_Model seriesModel ;
     View view;
     FloatingActionButton actionButton;
 
 
-    private ArrayList<Series_Model> Movies;
-    Series_Adapter movieAdapter;
-     RecyclerView MoviesRecyclerView;
-    private ArrayList<Series_Model> Movies1;
-    Series_Adapter movieAdapter1;
-    RecyclerView MoviesRecyclerView1;
+    private ArrayList<Series_Model> series_modelArrayList;
+    Series_Adapter seriesAdapter;
+     RecyclerView seriesRecyclerView;
+    private ArrayList<Series_Model> series_modelArrayList1;
+    Series_Adapter seriesAdapter1;
+    RecyclerView seriesRecyclerView1;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v=  inflater.inflate(R.layout.detailed_fragment,container,false);
         view=v;
         series_Info=new Bundle();
-        series=new Series_Model();
+        seriesModel=new Series_Model();
         d_Frag_processes=new detailedFragment_processes();
         Poster_Img=(ImageView)v.findViewById(R.id.Poster_Image);
         Title=(TextView)v.findViewById(R.id.Title);
@@ -81,8 +81,8 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 String shareBody="";
-                if(series!=null){
-                    shareBody=series.getTitle();
+                if(seriesModel!=null){
+                    shareBody=seriesModel.getTitle();
                 }
 
                 if(shareBody.equals(""))
@@ -95,12 +95,12 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
         });
 
         if(savedInstanceState!=null){
-            series= savedInstanceState.getParcelable("movie_Model");
+            seriesModel= savedInstanceState.getParcelable("seriesModel");
            /* d_Frag_processes.setReviewDetails();*/
             d_Frag_processes.setTrailerDetails();
         }
         else{
-            series=series_Info.getParcelable("movie_Model");
+            seriesModel=series_Info.getParcelable("seriesModel");
             if(!Favourite_Selected) {
                /* d_Frag_processes.FetchReview();*/
                 d_Frag_processes.FetchTrailer();
@@ -111,21 +111,21 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
             }
         }
         d_Frag_processes.setMovieDetails();
-        series.Favourite=isFavorite();
-        if(series.Favourite)
+        seriesModel.Favourite=isFavorite();
+        if(seriesModel.Favourite)
             Favourite.setImageResource(R.drawable.staron);
         else
             Favourite.setImageResource(R.drawable.staroff);
         Favourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!series.Favourite){
-                    series.Favourite=true;
+                if(!seriesModel.Favourite){
+                    seriesModel.Favourite=true;
                     markAsFavorite();
                     Toast.makeText(getActivity(),"Save in Favourite Movies", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    series.Favourite=false;
+                    seriesModel.Favourite=false;
                     removeFromFavorites();
                     Toast.makeText(getActivity(),"Remove From Favourite Movies", Toast.LENGTH_SHORT).show();
 
@@ -135,21 +135,22 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
 
         getRecommindations(v);
         getSimilarTV(v);
+
         return v;
     }
 
     private void getSimilarTV(View v) {
 
-        MoviesRecyclerView=(RecyclerView)v.findViewById(R.id.SimilarRecyclerView);
-        MoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        GetNetworkData getNetwork_data =new GetNetworkData("s",series.getId());
+        seriesRecyclerView=(RecyclerView)v.findViewById(R.id.SimilarRecyclerView);
+        seriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        GetNetworkData getNetwork_data =new GetNetworkData("s",seriesModel.getId());
         getNetwork_data.execute();
-        getNetwork_data.setNetworkResponse(new NetworkOperations() {
+        getNetwork_data.setNetworkOperations(new NetworkOperations() {
             @Override
-            public void OnSuccess(String JsonData) {
-                Movies = Series_Model.ParsingTrailerData(JsonData);
-                movieAdapter = new Series_Adapter(Movies, getContext());
-                MoviesRecyclerView.setAdapter(movieAdapter);
+            public void OnDataReached(String JsonData) {
+                series_modelArrayList = Series_Model.ParsingTrailerData(JsonData);
+                seriesAdapter = new Series_Adapter(series_modelArrayList, getContext());
+                seriesRecyclerView.setAdapter(seriesAdapter);
                 if(JsonData==null)
                     Toast.makeText(MainActivity.ctx," No Internet Connection", Toast.LENGTH_SHORT).show();
                 /*CheckTablet();
@@ -161,16 +162,16 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
 
     private void getRecommindations(View v) {
 
-        MoviesRecyclerView1=(RecyclerView)v.findViewById(R.id.RecommendationsRecyclerView);
-        MoviesRecyclerView1.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        GetNetworkData getNetwork_data =new GetNetworkData("r",series.getId());
+        seriesRecyclerView1=(RecyclerView)v.findViewById(R.id.RecommendationsRecyclerView);
+        seriesRecyclerView1.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        GetNetworkData getNetwork_data =new GetNetworkData("r",seriesModel.getId());
         getNetwork_data.execute();
-        getNetwork_data.setNetworkResponse(new NetworkOperations() {
+        getNetwork_data.setNetworkOperations(new NetworkOperations() {
             @Override
-            public void OnSuccess(String JsonData) {
-                Movies1 = Series_Model.ParsingTrailerData(JsonData);
-                movieAdapter1 = new Series_Adapter(Movies1, getContext());
-                MoviesRecyclerView1.setAdapter(movieAdapter1);
+            public void OnDataReached(String JsonData) {
+                series_modelArrayList1 = Series_Model.ParsingTrailerData(JsonData);
+                seriesAdapter1 = new Series_Adapter(series_modelArrayList1, getContext());
+                seriesRecyclerView1.setAdapter(seriesAdapter1);
                 if(JsonData==null)
                     Toast.makeText(MainActivity.ctx," No Internet Connection", Toast.LENGTH_SHORT).show();
                 /*CheckTablet();
@@ -181,7 +182,7 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("movie_Model",series);
+        outState.putParcelable("seriesModel",seriesModel);
         super.onSaveInstanceState(outState);
     }
 
@@ -190,7 +191,7 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
         public detailedFragment_processes(){
         }
 
-        public void FetchReview() {
+        /*public void FetchReview() {
             if(MainActivity.NetworkState()){
                 GetNetworkData fetchData = new GetNetworkData("review_Model",series.getId());
                 fetchData.execute();
@@ -212,17 +213,17 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
                 setReviewDetails();
                 Toast.makeText(getActivity()," No Internet Connection", Toast.LENGTH_SHORT).show();
             }
-        }
+        }*/
         public void FetchTrailer() {
             if(MainActivity.NetworkState()) {
-                GetNetworkData fetchData = new GetNetworkData("trailer_Model", series.getId());
+                GetNetworkData fetchData = new GetNetworkData("trailer_Model", seriesModel.getId());
                 fetchData.execute();
-                fetchData.setNetworkResponse(new NetworkOperations()  {
+                fetchData.setNetworkOperations(new NetworkOperations()  {
                     @Override
-                    public void OnSuccess(String JsonData) {
+                    public void OnDataReached(String JsonData) {
                         trailer_Model trailer = new trailer_Model();
                         trailer = trailer_Model.ParsingTrailerData(JsonData);
-                        series.setTrailer(trailer);
+                        seriesModel.setTrailer(trailer);
                         setTrailerDetails();
                     }
 
@@ -231,33 +232,33 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
             }
             else{
                 trailer_Model trailer = new trailer_Model();
-                series.setTrailer(trailer);
+                seriesModel.setTrailer(trailer);
                 setTrailerDetails();
                 Toast.makeText(getActivity()," No Internet Connection", Toast.LENGTH_SHORT).show();
             }
         }
 
         public void setMovieDetails(){
-            Picasso.with(view.getContext()).load(img_String+ series.getPoster_ImageUrl())
+            Picasso.with(view.getContext()).load(img_String+ seriesModel.getPoster_ImageUrl())
                     .placeholder(R.drawable.loadingicon).error(R.drawable.error).into(Poster_Img);
-            Title.setText( series.getTitle());
-            Overview.setText(series.getOverview());
-            Release_Date.setText(series.getRelease_Date());
-            Vote_Rating.setText(series.getVote_average()+"/10");
+            Title.setText( seriesModel.getTitle());
+            Overview.setText(seriesModel.getOverview());
+            Release_Date.setText(seriesModel.getRelease_Date());
+            Vote_Rating.setText(seriesModel.getVote_average()+"/10");
         }
         public void setTrailerDetails(){
-            Trailer_Name.setText(series.getTrailerName());
+            Trailer_Name.setText(seriesModel.getTrailerName());
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v="+ series.getTrailerKey())));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v="+ seriesModel.getTrailerKey())));
                 }
             });
         }
-        public void setReviewDetails(){
+     /*   public void setReviewDetails(){
             Review_Author.setText(series.getReviewAuthor());
             Review_Content.setText(series.getReviewContent());
-        }
+        }*/
     }
 
     public static void IsFavouriteSelected(boolean isSelected) {
@@ -273,17 +274,17 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
                 if (!isFavorite()) {
                     ContentValues movieValues = new ContentValues();
                     movieValues.put(SeriesContract.SeriesEntry.COLUMN_SERIES_ID,
-                            series.getId());
+                            seriesModel.getId());
                     movieValues.put(SeriesContract.SeriesEntry.COLUMN_SERIES_TITLE,
-                            series.getTitle());
+                            seriesModel.getTitle());
                     movieValues.put(SeriesContract.SeriesEntry.COLUMN_SERIES_POSTER_PATH,
-                            series.getPoster_ImageUrl());
+                            seriesModel.getPoster_ImageUrl());
                     movieValues.put(SeriesContract.SeriesEntry.COLUMN_SERIES_OVERVIEW,
-                            series.getOverview());
+                            seriesModel.getOverview());
                     movieValues.put(SeriesContract.SeriesEntry.COLUMN_SERIES_VOTE_AVERAGE,
-                            series.getVote_average());
+                            seriesModel.getVote_average());
                     movieValues.put(SeriesContract.SeriesEntry.COLUMN_SERIES_RELEASE_DATE,
-                            series.getRelease_Date());
+                            seriesModel.getRelease_Date());
 
                     getActivity().getContentResolver().insert(
                             SeriesContract.SeriesEntry.CONTENT_URI,
@@ -306,7 +307,7 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
             protected Void doInBackground(Void... params) {
                 if (isFavorite()) {
                     getActivity().getContentResolver().delete(SeriesContract.SeriesEntry.CONTENT_URI,
-                            SeriesContract.SeriesEntry.COLUMN_SERIES_ID + " = " + series.getId(), null);
+                            SeriesContract.SeriesEntry.COLUMN_SERIES_ID + " = " + seriesModel.getId(), null);
                 }
                 return null;
             }
@@ -324,7 +325,7 @@ public class detailed_Fragment extends android.support.v4.app.Fragment {
         Cursor movieCursor = getActivity().getContentResolver().query(
                 SeriesContract.SeriesEntry.CONTENT_URI,
                 new String[]{SeriesContract.SeriesEntry.COLUMN_SERIES_ID},
-                SeriesContract.SeriesEntry.COLUMN_SERIES_ID + " = " + series.getId(),
+                SeriesContract.SeriesEntry.COLUMN_SERIES_ID + " = " + seriesModel.getId(),
                 null,
                 null);
 

@@ -76,12 +76,6 @@ public class ActivityLogin extends AppCompatActivity implements
             startActivity(new Intent(this, MainActivity.class));
             finish();
 
-          /*  String personName = acct.getDisplayName();
-            String personPhotoUrl = acct.getPhotoUrl().toString();
-            String email = acct.getEmail();*/
-           /* Log.e(TAG, "Name: " + personName + ", email: " + email
-                    + ", Image: " + personPhotoUrl);*/
-
         } else {
             // Signed out, show unauthenticated UI.
 

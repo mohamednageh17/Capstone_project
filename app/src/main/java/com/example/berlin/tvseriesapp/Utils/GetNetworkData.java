@@ -13,10 +13,10 @@ public class GetNetworkData extends AsyncTask<Void,Void,String> {
     private String Url_Key;
     private String id;
     public static String Basic_Url = "http://api.themoviedb.org/3/tv";
-    public static String PopMovies_Url = "/popular?api_key=d6464c49a9503b302888a4a139f1ed70";
-    public static String TopMovies_Url = "/top_rated?api_key=d6464c49a9503b302888a4a139f1ed70";
-    public static String TrailersMovies_Url = "/videos?api_key=d6464c49a9503b302888a4a139f1ed70";
-    public static String ReviewsMovies_Url = "/reviews?api_key=d6464c49a9503b302888a4a139f1ed70";
+    public static String PopSeries_Url = "/popular?api_key=d6464c49a9503b302888a4a139f1ed70";
+    public static String TopSeries_Url = "/top_rated?api_key=d6464c49a9503b302888a4a139f1ed70";
+    public static String TrailersSeries_Url = "/videos?api_key=d6464c49a9503b302888a4a139f1ed70";
+    public static String ReviewsSeries_Url = "/reviews?api_key=d6464c49a9503b302888a4a139f1ed70";
     public static String latest_Url = "/latest?api_key=d6464c49a9503b302888a4a139f1ed70";
     public static String airing_today = "/airing_today?api_key=d6464c49a9503b302888a4a139f1ed70";
     public static String on_the_air = "/on_the_air?api_key=d6464c49a9503b302888a4a139f1ed70";
@@ -34,13 +34,13 @@ public class GetNetworkData extends AsyncTask<Void,Void,String> {
         this.id=id;
     }
 
-    NetworkOperations networkResponse;
+    NetworkOperations networkOperations;
 
-    public void setNetworkResponse(NetworkOperations networkResponse) {
-        this.networkResponse = networkResponse;
+    public void setNetworkOperations(NetworkOperations networkResponse) {
+        this.networkOperations = networkResponse;
     }
 
-    public String Fetching_Data(String UrlKey) {
+    public String get_Data(String UrlKey) {
         HttpURLConnection urlConnect = null;
         BufferedReader reader = null;
         String JsonData = null;
@@ -88,30 +88,30 @@ public class GetNetworkData extends AsyncTask<Void,Void,String> {
     protected String doInBackground(Void... voids) {
         String JsonData = "";
         if(Url_Key.equals("Popular Movies"))
-              JsonData = Fetching_Data(Basic_Url+PopMovies_Url);
+              JsonData = get_Data(Basic_Url+PopSeries_Url);
         else if(Url_Key.equals("Top Rated Movies"))
-              JsonData = Fetching_Data( Basic_Url+TopMovies_Url);
+              JsonData = get_Data( Basic_Url+TopSeries_Url);
         else if(Url_Key.equals("latest_Url"))
-            JsonData = Fetching_Data( Basic_Url+latest_Url);
+            JsonData = get_Data( Basic_Url+latest_Url);
         else if(Url_Key.equals("airing_today"))
-            JsonData = Fetching_Data( Basic_Url+airing_today);
+            JsonData = get_Data( Basic_Url+airing_today);
         else if(Url_Key.equals("on_the_air"))
-            JsonData = Fetching_Data( Basic_Url+on_the_air);
+            JsonData = get_Data( Basic_Url+on_the_air);
         else if(Url_Key.equals("search"))
-            JsonData = Fetching_Data( searchURL+id);
+            JsonData = get_Data( searchURL+id);
         else if(Url_Key.equals("review_Model"))
-            JsonData = Fetching_Data( Basic_Url + "/" + id + ReviewsMovies_Url);
+            JsonData = get_Data( Basic_Url + "/" + id + ReviewsSeries_Url);
         else if(Url_Key.equals("trailer_Model"))
-            JsonData = Fetching_Data(  Basic_Url + "/" + id + TrailersMovies_Url);
+            JsonData = get_Data(  Basic_Url + "/" + id + TrailersSeries_Url);
         else if(Url_Key.equals("s"))
-            JsonData = Fetching_Data( Basic_Url + "/" + id + recommendations_Url);
+            JsonData = get_Data( Basic_Url + "/" + id + recommendations_Url);
         else if(Url_Key.equals("r"))
-            JsonData = Fetching_Data(  Basic_Url + "/" + id + similar_Url);
+            JsonData = get_Data(  Basic_Url + "/" + id + similar_Url);
         return JsonData;
     }
 
     @Override
     protected void onPostExecute(String JsonData) {
-            networkResponse.OnSuccess(JsonData);
+            networkOperations.OnDataReached(JsonData);
     }
 }

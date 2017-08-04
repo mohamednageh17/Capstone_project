@@ -15,7 +15,7 @@ public class detailed_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailed_activity);
         detailed_Fragment myDetailed_fragment=new detailed_Fragment();
-        Bundle MoviesInfo= getIntent().getBundleExtra("MoviesInfo");
+        Bundle MoviesInfo= getIntent().getBundleExtra("SeriesInfo");
         myDetailed_fragment.setArguments(MoviesInfo);
         getSupportFragmentManager().beginTransaction().add(R.id.DetailedFragment,myDetailed_fragment).commit();
         ActionBar actionBar = this.getSupportActionBar();
